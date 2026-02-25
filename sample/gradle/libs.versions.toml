@@ -1,0 +1,38 @@
+[versions]
+kotlin = "2.3.10"
+kotlin-coroutines = "1.10.2"
+kermit = "2.0.8"
+kotlin-wrappers = "1.0.0-pre.732"
+androidx-activity-compose = "1.12.4"
+accompanist-permision = "0.36.0"
+webrtc-ios-sdk = "137.7151.04"
+# Version placeholder — substituted with the local :webrtc-kmp project at build time
+webrtc-kmp = "0.0.0"
+
+#Android
+minSdk = "21"
+compileSdk = "35"
+targetSdk = "35"
+
+# Plugins
+agp = "8.9.3"
+compose-plugin = "1.10.1"
+
+[libraries]
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permision" }
+kotlin-wrappers-bom = { module = "org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom", version.ref = "kotlin-wrappers" }
+kotlin-wrappers-emotion = { module = "org.jetbrains.kotlin-wrappers:kotlin-emotion" }
+kotlin-wrappers-react = { module = "org.jetbrains.kotlin-wrappers:kotlin-react" }
+kotlin-wrappers-reactDom = { module = "org.jetbrains.kotlin-wrappers:kotlin-react-dom" }
+kotlin-wrappers-mui = { module = "org.jetbrains.kotlin-wrappers:kotlin-mui-material" }
+webrtc-kmp = { module = "com.shepeliev:webrtc-kmp", version.ref = "webrtc-kmp" }
+
+[plugins]
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

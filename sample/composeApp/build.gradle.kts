@@ -82,7 +82,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlin.coroutines)
             implementation(libs.kermit)
-            api(project(":webrtc-kmp"))
+            api(libs.webrtc.kmp)
         }
 
         androidMain.dependencies {

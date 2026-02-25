@@ -99,7 +99,7 @@ kotlin {
         }
 
         jsMain.dependencies {
-            implementation(npm("webrtc-adapter", "8.1.1"))
+            implementation(npm("webrtc-adapter", "9.0.3"))
         }
 
         wasmJsMain.dependencies {

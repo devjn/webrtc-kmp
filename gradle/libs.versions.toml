@@ -1,31 +1,24 @@
 [versions]
-kotlin = "2.1.21"
-kotlin-coroutines = "1.10.1"
-kotlin-browser = "0.3"
-androidx-activity-compose = "1.10.1"
-androidx-appcompat = "1.7.0"
-androidx-core = "1.16.0"
-androidx-material = "1.12.0"
-androidx-lifecycle = "2.9.0"
-androidx-startup = "1.2.0"
-androidx-test-core = "1.6.1"
-androidx-test-runner = "1.6.2"
-androidx-test-rules = "1.6.1"
-accompanist-permision = "0.36.0"
-kermit = "2.0.5"
-kotlin-wrappers = "1.0.0-pre.732"
-webrtc-android-sdk = "125.6422.06.1"
-webrtc-ios-sdk = "125.6422.07"
+kotlin = "2.3.10"
+kotlin-coroutines = "1.10.2"
+kotlin-browser = "0.5.0"
+webrtc-android-sdk = "137.7151.04"
+webrtc-ios-sdk = "137.7151.04"
 
 #Android
 minSdk = "21"
 compileSdk = "35"
 targetSdk = "35"
 
+androidx-core = "1.16.0"
+androidx-startup = "1.2.0"
+androidx-test-core = "1.6.1"
+androidx-test-runner = "1.6.2"
+androidx-test-rules = "1.6.1"
+
 # Plugins
 agp = "8.9.3"
 ktlint = "12.2.0"
-compose-plugin = "1.7.3"
 vanniktech-maven-publish = "0.34.0"
 
 [libraries]
@@ -35,27 +28,13 @@ kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
 kotlin-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version.ref = "kotlin-browser" }
 androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
-androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
-androidx-material = { module = "com.google.android.material:material", version.ref = "androidx-material" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permision" }
-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test-core" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner" }
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test-rules" }
-kotlin-wrappers-bom = { module = "org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom", version.ref = "kotlin-wrappers" }
-kotlin-wrappers-emotion = { module = "org.jetbrains.kotlin-wrappers:kotlin-emotion" }
-kotlin-wrappers-react = { module = "org.jetbrains.kotlin-wrappers:kotlin-react" }
-kotlin-wrappers-reactDom = { module = "org.jetbrains.kotlin-wrappers:kotlin-react-dom" }
-kotlin-wrappers-mui = { module = "org.jetbrains.kotlin-wrappers:kotlin-mui-material" }
 
 [plugins]
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
-jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-androidApplication = { id = "com.android.application", version.ref = "agp" }
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
+androidLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-maven-publish" }
