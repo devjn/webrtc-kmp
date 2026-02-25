@@ -91,6 +91,7 @@ internal class RemoteVideoTrack(
         fun dispose() {
             stop()
             disposed = true
+            timer.cancel()
         }
     }
 }

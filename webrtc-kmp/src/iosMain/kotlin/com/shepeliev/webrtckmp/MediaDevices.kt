@@ -64,7 +64,7 @@ private object MediaDevicesImpl : MediaDevices {
     }
 
     override suspend fun getDisplayMedia(): MediaStream {
-        TODO("Not yet implemented for iOS platform")
+        throw UnsupportedOperationException("Screen sharing is not supported on iOS")
     }
 
     override suspend fun supportsDisplayMedia(): Boolean = false

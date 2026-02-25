@@ -226,6 +226,7 @@ public actual class PeerConnection actual constructor(
         closed = true
         remoteTracks.values.forEach(MediaStreamTrack::stop)
         remoteTracks.clear()
+        localTracks.clear()
         android.dispose()
         coroutineScope.launch {
             _peerConnectionEvent.emit(SignalingStateChange(SignalingState.Closed))
@@ -339,10 +340,14 @@ public actual class PeerConnection actual constructor(
                 androidStreams.map { androidStream ->
                     MediaStream(androidStream).also { stream ->
                         androidStream.audioTracks.forEach {
-                            stream.addTrack(RemoteAudioTrack(it))
+                            stream.addTrack(
+                                remoteTracks.getOrPut(it.id()) { RemoteAudioTrack(it) } as RemoteAudioTrack
+                            )
                         }
                         androidStream.videoTracks.forEach {
-                            stream.addTrack(RemoteVideoTrack(it))
+                            stream.addTrack(
+                                remoteTracks.getOrPut(it.id()) { RemoteVideoTrack(it) } as RemoteVideoTrack
+                            )
                         }
                     }
                 }

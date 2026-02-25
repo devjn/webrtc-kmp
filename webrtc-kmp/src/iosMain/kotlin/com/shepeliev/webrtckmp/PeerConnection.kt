@@ -88,6 +88,7 @@ public actual class PeerConnection actual constructor(
     private val coroutineScope = MainScope()
     private val localTracks = mutableMapOf<String, MediaStreamTrackImpl>()
     private val remoteTracks = mutableMapOf<String, MediaStreamTrackImpl>()
+    private var closed = false
 
     public actual fun createDataChannel(
         label: String,
@@ -205,8 +206,11 @@ public actual class PeerConnection actual constructor(
         }
 
     public actual fun close() {
+        if (closed) return
+        closed = true
         remoteTracks.values.forEach(MediaStreamTrack::stop)
         remoteTracks.clear()
+        localTracks.clear()
         ios.close()
         coroutineScope.launch {
             _peerConnectionEvent.emit(SignalingStateChange(SignalingState.Closed))
@@ -346,10 +350,14 @@ public actual class PeerConnection actual constructor(
             iosStreams.map { iosStream ->
                 MediaStream(iosStream).also { stream ->
                     iosStream.audioTracks.forEach {
-                        stream.addTrack(RemoteAudioTrack(it as RTCAudioTrack))
+                        stream.addTrack(
+                            remoteTracks.getOrPut((it as RTCAudioTrack).trackId) { RemoteAudioTrack(it) } as RemoteAudioTrack
+                        )
                     }
                     iosStream.videoTracks.forEach {
-                        stream.addTrack(RemoteVideoTrack(it as RTCVideoTrack))
+                        stream.addTrack(
+                            remoteTracks.getOrPut((it as RTCVideoTrack).trackId) { RemoteVideoTrack(it) } as RemoteVideoTrack
+                        )
                     }
                 }
             }
