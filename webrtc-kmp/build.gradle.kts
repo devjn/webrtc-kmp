@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
@@ -22,6 +21,24 @@ kotlin {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
+    androidLibrary {
+        namespace = "com.shepeliev.webrtckmp"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
+
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }
+
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_1_8)
+                }
+            }
+        }
+    }
+
     cocoapods {
         version = project.version.toString()
         summary = "WebRTC Kotlin Multiplatform SDK"
@@ -36,17 +53,6 @@ kotlin {
                     .get()
             moduleName = "WebRTC"
             packageName = "WebRTC"
-        }
-    }
-
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    androidTarget {
-        publishAllLibraryVariants()
-        instrumentedTestVariant {
-            sourceSetTree.set(KotlinSourceSetTree.test)
-        }
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_1_8
         }
     }
 
@@ -66,11 +72,8 @@ kotlin {
             commonWebpackConfig {
                 devServer =
                     (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                        static =
-                            (static ?: mutableListOf()).apply {
-                                // Serve sources to debug inside browser
-                                add(project.rootDir.path)
-                            }
+                        // Serve sources to debug inside browser
+                        static(project.rootDir.path)
                     }
             }
         }
@@ -112,8 +115,12 @@ kotlin {
             implementation(libs.kotlin.coroutines.test)
         }
 
-        androidInstrumentedTest.dependencies {
-            implementation(libs.androidx.test.rules)
+        getByName("androidDeviceTest") {
+            dependencies {
+                implementation(libs.androidx.test.rules)
+                implementation(libs.androidx.test.core)
+                implementation(libs.androidx.test.runner)
+            }
         }
 
         val iosX64AndSimulatorArm64Main by creating {
@@ -124,42 +131,6 @@ kotlin {
         iosX64Main.dependsOn(iosX64AndSimulatorArm64Main)
         val iosSimulatorArm64Main by getting
         iosSimulatorArm64Main.dependsOn(iosX64AndSimulatorArm64Main)
-    }
-}
-
-android {
-    namespace = "com.shepeliev.webrtckmp"
-
-    compileSdk =
-        libs.versions.compileSdk
-            .get()
-            .toInt()
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].res.srcDir("src/androidMain/res")
-
-    defaultConfig {
-        minSdk =
-            libs.versions.minSdk
-                .get()
-                .toInt()
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    testOptions {
-        targetSdk =
-            libs.versions.targetSdk
-                .get()
-                .toInt()
-    }
-
-    dependencies {
-        androidTestImplementation(libs.androidx.test.core)
-        androidTestImplementation(libs.androidx.test.runner)
     }
 }
 
