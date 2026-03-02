@@ -3,6 +3,7 @@ package com.shepeliev.webrtckmp
 import WebRTC.RTCStatistics
 import kotlinx.cinterop.ExperimentalForeignApi
 
+@ConsistentCopyVisibility
 @OptIn(ExperimentalForeignApi::class)
 public actual data class RtcStats internal constructor(
     val native: RTCStatistics,
